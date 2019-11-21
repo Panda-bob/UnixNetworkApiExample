@@ -77,7 +77,7 @@ namespace example{
 			if((ret = read(m_cfd,buf,sizeof(buf)-1))>0)
 			{
 				buf[ret] = 0x00;
-				//cout<<"message revice:"<<endl;
+			//cout<<"message revice:"<<endl;
 				cout<<buf;
 
 			}
