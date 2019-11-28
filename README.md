@@ -6,4 +6,4 @@
 * the zero copy echo server,dup socket fd to STDOUT_FILENO clinet 
 * use splice sendfile vmsplice tee and dup2
 ## example 3
-* use epoll create a reactor network frame
+* reactor pattern and proactor pattern with select and epoll   
