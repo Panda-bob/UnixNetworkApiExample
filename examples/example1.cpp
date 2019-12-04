@@ -17,7 +17,7 @@
 using namespace std;
 
 namespace example{
-
+#define BACKLOG 128
 	EchoServer::EchoServer(const uint16_t port):m_port(port)
 	{
 		m_sfd = socket(AF_INET,SOCK_STREAM,0);//TCP SOCKET
@@ -48,7 +48,7 @@ namespace example{
 			cout<<"bind error: "<<strerror(errno)<<endl;
 			return false;
 		}
-		ret = listen(m_sfd,128);//backlog=128 is max length queue of pending connection for m_fd may grow
+		ret = listen(m_sfd,BACKLOG);//backlog=128 is max length queue of pending connection for m_fd may grow
 		if(ret != 0)
 		{
 			cout<<"listen error: "<< strerror(errno)<<endl;
@@ -112,7 +112,7 @@ namespace example{
 		if(write(m_sfd,buf,len)<0)
 		{
 			cout<< "send message filed!"<<endl;
-		}	
+		}
 	}
 
 

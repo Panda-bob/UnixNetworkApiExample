@@ -12,7 +12,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <unistd.h>
-#include<iostream>
+#include <iostream>
 #include <fcntl.h>
 using namespace std;
 
@@ -69,18 +69,31 @@ namespace example
 			cout<<"pipe create faild: "<<strerror(errno)<<endl;
 			return ;
 		}
+		int w_fd;
 		while(true)
-		{
-			if(splice(m_cfd,NULL,pipe_fd[1],NULL,256,SPLICE_F_MOVE|SPLICE_F_MORE)< 0 )
+		{	
+	//		char buf[256];
+	//		memset(buf,'\0',sizeof(buf));
+			//recv(m_cfd,buf,sizeof(buf)-1,0);
+			//cout<< buf<<endl;
+			if((w_fd = open("./example2.txt",O_RDWR|O_CREAT,0644) < 0))
 			{
-				cout<< "splice in failed: "<< strerror(errno)<<endl;
+				cout<<"open exampl2.txt failed: "<<strerror(errno);
 				return ;
 			}
-			if(splice(pipe_fd[0],NULL,m_cfd,NULL,256,SPLICE_F_MOVE|SPLICE_F_MORE)< 0)
+		
+			if(splice(m_cfd,NULL,pipe_fd[1],NULL,256,SPLICE_F_MOVE|SPLICE_F_MORE) < 0 )
 			{
-				cout<<"splice out failed: "<< strerror(errno)<<endl;
+				return;
+			}
+
+	//		read(pipe_fd[0],buf,sizeof(buf));
+	//		cout<<buf<<endl;
+			if(splice(pipe_fd[0],NULL,w_fd,NULL,256,SPLICE_F_MOVE|SPLICE_F_MORE) < 0 )
+			{
 				return ;
 			}
+			close(w_fd);
 		}
 	
 	}
@@ -122,27 +135,6 @@ namespace example
 		}
 		cout<< buf<<endl;
 
-		if((fd = open("./example2.txt",O_RDWR|O_CREAT,0644) < 0))
-		{
-			cout<<"open exampl2.txt failed: "<<strerror(errno);
-			return ;
-		}
-		int pipe_fd[2];
-		if(pipe(pipe_fd) <0)
-		{
-			cout<<"pipe failed: "<< strerror(errno);
-			return ;
-		}
-		if(splice(m_sfd,NULL,pipe_fd[1],NULL,256,SPLICE_F_MOVE|SPLICE_F_MORE)< 0 )
-		{
-			cout<< "splice in failed: "<< strerror(errno)<<endl;
-			return ;
-		}
-		if(splice(pipe_fd[0],NULL,fd,NULL,256,SPLICE_F_MOVE|SPLICE_F_MORE)< 0)
-		{
-			cout<<"splice out failed: "<< strerror(errno)<<endl;
-			return ;
-		}
 
 	}
 

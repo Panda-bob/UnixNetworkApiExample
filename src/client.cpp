@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <example2.h>
+#include <string>
 using namespace std;
 using namespace example;
 int main(int argc,char * argv [])
@@ -18,6 +20,18 @@ int main(int argc,char * argv [])
 		cout<<"Usage: client [server_ip] [server_port]"<<endl;
 		exit(-1);
 	}
+	ZeroCopyEchoClient client(argv[argc-2],atoi(argv[argc-1]));
+	if(!client.connect_server())
+	{
+		cout<<"client connect server faild!"<<endl;
+		exit(-1);
+	}
+	string str("send message to server!!!!\n");
+	
+	while(true){
+		client.send_message(str.c_str(),str.size());
+	}
+#ifdef EXAMPLE1_TEST
 	EchoClient client(argv[argc-2],atoi(argv[argc-1]));
 	if(!client.connect_server())
 	{
@@ -30,6 +44,6 @@ int main(int argc,char * argv [])
 	{
 		client.send_message(buf,strlen(buf));
 	}
-
+#endif
 	return 0;
 }
