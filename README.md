@@ -3,8 +3,9 @@
 * the socket client connect the server, then client send the data to server
 * the server print the client data in stdout
 ## example 2
-* the zero copy echo server,dup socket fd to STDOUT_FILENO clinet 
-* use splice sendfile vmsplice tee and dup2
+* the zero copy echo server and client
+* dup socket fd to STDOUT_FILENO clinet 
+* splice the client message to server local file
 ## example 3
 * nonblocking i/o echo server and client with select
 ## example 4 
