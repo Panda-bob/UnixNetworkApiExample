@@ -23,3 +23,6 @@
 ## example 7
 * leader/follower pattern server with epoll
 * 
+## example 8 
+* get the network infomation ipaddress gateway netmask is_dhcp mac broadcast
+* and config the network 
