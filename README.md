@@ -7,9 +7,9 @@
 * dup socket fd to STDOUT_FILENO clinet 
 * splice the client message to server local file
 ## example 3
-* nonblocking i/o echo server and client with select
+* nonblocking i/o echo server and client with select or epoll
 ## example 4 
-* nonblocking i/o echo server and client with epoll
+* reuse port 
 ## example 5
 * half-sync/half-reactive pattern server with epoll
 * use task queue dispatcher the read/write event
